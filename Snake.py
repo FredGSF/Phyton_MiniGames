@@ -1,14 +1,16 @@
 from tkinter import *
 import random
 
-GAME_WIDTH = 700
-GAME_HEIGHT = 700
+GAME_WIDTH = 1750
+GAME_HEIGHT = 800
 SPEED = 50
 SPACE_SIZE = 50
 BODY_PARTS = 3
-SNAKE_COLOR = "#00FF00"
-FOOD_COLOR = "#FF0000"
-BACKGROUND_COLOR = "#000000"
+SNAKE_COLOR = "#66FF66"
+FOOD_COLOR = "#FF6666"
+BACKGROUND_COLOR = "#333333"
+GAME_OVER_COLOR = "#FF0000"
+GAME_OVER_TEXT_COLOR = "#FFFFFF"
 
 
 class Snake:
@@ -63,7 +65,7 @@ def next_turn(snake, food):
 
         score += 1
 
-        label.config(text="Score:{}".format(score))
+        score_label.config(text="Score:{}".format(score))
 
         canvas.delete("food")
 
@@ -121,7 +123,7 @@ def reset_game():
     global score, direction, snake, food                      
     score = 0
     direction = 'down'
-    label.config(text="Score:{}".format(score))
+    score_label.config(text="Score:{}".format(score))
 
     snake = Snake()
     food = Food()
@@ -136,26 +138,36 @@ def space_pressed(event):
 
 
 def game_over():
-
+    
     canvas.delete(ALL)
-    canvas.create_text(canvas.winfo_width()/2, canvas.winfo_height()/2,
-                       font=('consolas',70), text="GAME OVER", fill="red", tag="gameover")
-    canvas.create_text(canvas.winfo_width()/2, canvas.winfo_height()/1.5,
-    font=('consolas',20), text="Press Space to Play", fill="white", tag="gameover")
+    canvas.create_text(
+        canvas.winfo_width() / 2, canvas.winfo_height() / 2,
+        font=('consolas', 70), text="GAME OVER", fill=GAME_OVER_COLOR, tag="gameover"
+    )
+    canvas.create_text(
+        canvas.winfo_width() / 2, canvas.winfo_height() / 1.5,
+        font=('consolas', 20), text="Press Space to Play", fill=GAME_OVER_TEXT_COLOR, tag="gameover"
+    )
 
 
 window = Tk()
 window.title("Snake game")
 window.resizable(False, False)
 
+
 score = 0
 direction = 'down'
 
-label = Label(window, text="Score:{}".format(score), font=('consolas', 40))
-label.pack()
+score_label = Label(window, text="Score:{}".format(score), font=('consolas', 24), fg='white', bg=BACKGROUND_COLOR)
+score_label.pack()
 
-canvas = Canvas(window, bg=BACKGROUND_COLOR, height=GAME_HEIGHT, width=GAME_WIDTH)
+
+canvas = Canvas(
+    window, bg=BACKGROUND_COLOR, highlightthickness=0, height=GAME_HEIGHT, width=GAME_WIDTH
+)
 canvas.pack()
+
+
 
 window.update()
 
