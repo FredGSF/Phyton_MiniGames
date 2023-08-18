@@ -117,12 +117,31 @@ def check_collisions(snake):
 
     return False
 
+def reset_game():
+    global score, direction, snake, food                      
+    score = 0
+    direction = 'down'
+    label.config(text="Score:{}".format(score))
+
+    snake = Snake()
+    food = Food()
+
+def space_pressed(event):
+    global snake, food
+
+    if canvas.find_withtag("gameover"):
+        canvas.delete("gameover")
+        reset_game()  # Call reset_game instead of next_turn
+        next_turn(snake, food)
+
 
 def game_over():
 
     canvas.delete(ALL)
     canvas.create_text(canvas.winfo_width()/2, canvas.winfo_height()/2,
                        font=('consolas',70), text="GAME OVER", fill="red", tag="gameover")
+    canvas.create_text(canvas.winfo_width()/2, canvas.winfo_height()/1.5,
+    font=('consolas',20), text="Press Space to Play", fill="white", tag="gameover")
 
 
 window = Tk()
@@ -154,10 +173,12 @@ window.bind('<Left>', lambda event: change_direction('left'))
 window.bind('<Right>', lambda event: change_direction('right'))
 window.bind('<Up>', lambda event: change_direction('up'))
 window.bind('<Down>', lambda event: change_direction('down'))
+window.bind('<space>', space_pressed)  # Bind space bar key press
 
 snake = Snake()
 food = Food()
 
 next_turn(snake, food)
+
 
 window.mainloop()
