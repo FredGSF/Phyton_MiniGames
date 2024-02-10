@@ -24,7 +24,9 @@ class Snake:
             self.coordinates.append([0, 0])
 
         for x, y in self.coordinates:
-            square = canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=SNAKE_COLOR, tag="snake")
+            square = canvas.create_rectangle(
+                x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=SNAKE_COLOR, tag="snake"
+            )
             self.squares.append(square)
 
 
@@ -32,12 +34,14 @@ class Food:
 
     def __init__(self):
 
-        x = random.randint(0, (GAME_WIDTH / SPACE_SIZE)-1) * SPACE_SIZE
+        x = random.randint(0, (GAME_WIDTH / SPACE_SIZE) - 1) * SPACE_SIZE
         y = random.randint(0, (GAME_HEIGHT / SPACE_SIZE) - 1) * SPACE_SIZE
 
         self.coordinates = [x, y]
 
-        canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=FOOD_COLOR, tag="food")
+        canvas.create_oval(
+            x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=FOOD_COLOR, tag="food"
+        )
 
 
 def next_turn(snake, food):
@@ -55,7 +59,9 @@ def next_turn(snake, food):
 
     snake.coordinates.insert(0, (x, y))
 
-    square = canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=SNAKE_COLOR)
+    square = canvas.create_rectangle(
+        x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=SNAKE_COLOR
+    )
 
     snake.squares.insert(0, square)
 
@@ -90,17 +96,17 @@ def change_direction(new_direction):
 
     global direction
 
-    if new_direction == 'left':
-        if direction != 'right':
+    if new_direction == "left":
+        if direction != "right":
             direction = new_direction
-    elif new_direction == 'right':
-        if direction != 'left':
+    elif new_direction == "right":
+        if direction != "left":
             direction = new_direction
-    elif new_direction == 'up':
-        if direction != 'down':
+    elif new_direction == "up":
+        if direction != "down":
             direction = new_direction
-    elif new_direction == 'down':
-        if direction != 'up':
+    elif new_direction == "down":
+        if direction != "up":
             direction = new_direction
 
 
@@ -119,14 +125,16 @@ def check_collisions(snake):
 
     return False
 
+
 def reset_game():
-    global score, direction, snake, food                      
+    global score, direction, snake, food
     score = 0
-    direction = 'down'
+    direction = "down"
     score_label.config(text="Score:{}".format(score))
 
     snake = Snake()
     food = Food()
+
 
 def space_pressed(event):
     global snake, food
@@ -138,15 +146,23 @@ def space_pressed(event):
 
 
 def game_over():
-    
+
     canvas.delete(ALL)
     canvas.create_text(
-        canvas.winfo_width() / 2, canvas.winfo_height() / 2,
-        font=('consolas', 70), text="GAME OVER", fill=GAME_OVER_COLOR, tag="gameover"
+        canvas.winfo_width() / 2,
+        canvas.winfo_height() / 2,
+        font=("consolas", 70),
+        text="GAME OVER",
+        fill=GAME_OVER_COLOR,
+        tag="gameover",
     )
     canvas.create_text(
-        canvas.winfo_width() / 2, canvas.winfo_height() / 1.5,
-        font=('consolas', 20), text="Press Space to Play", fill=GAME_OVER_TEXT_COLOR, tag="gameover"
+        canvas.winfo_width() / 2,
+        canvas.winfo_height() / 1.5,
+        font=("consolas", 20),
+        text="Press Space to Play",
+        fill=GAME_OVER_TEXT_COLOR,
+        tag="gameover",
     )
 
 
@@ -156,17 +172,26 @@ window.resizable(False, False)
 
 
 score = 0
-direction = 'down'
+direction = "down"
 
-score_label = Label(window, text="Score:{}".format(score), font=('consolas', 24), fg='white', bg=BACKGROUND_COLOR)
+score_label = Label(
+    window,
+    text="Score:{}".format(score),
+    font=("consolas", 24),
+    fg="white",
+    bg=BACKGROUND_COLOR,
+)
 score_label.pack()
 
 
 canvas = Canvas(
-    window, bg=BACKGROUND_COLOR, highlightthickness=0, height=GAME_HEIGHT, width=GAME_WIDTH
+    window,
+    bg=BACKGROUND_COLOR,
+    highlightthickness=0,
+    height=GAME_HEIGHT,
+    width=GAME_WIDTH,
 )
 canvas.pack()
-
 
 
 window.update()
@@ -176,16 +201,16 @@ window_height = window.winfo_height()
 screen_width = window.winfo_screenwidth()
 screen_height = window.winfo_screenheight()
 
-x = int((screen_width/2) - (window_width/2))
-y = int((screen_height/2) - (window_height/2))
+x = int((screen_width / 2) - (window_width / 2))
+y = int((screen_height / 2) - (window_height / 2))
 
 window.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
-window.bind('<Left>', lambda event: change_direction('left'))
-window.bind('<Right>', lambda event: change_direction('right'))
-window.bind('<Up>', lambda event: change_direction('up'))
-window.bind('<Down>', lambda event: change_direction('down'))
-window.bind('<space>', space_pressed)  # Bind space bar key press
+window.bind("<Left>", lambda event: change_direction("left"))
+window.bind("<Right>", lambda event: change_direction("right"))
+window.bind("<Up>", lambda event: change_direction("up"))
+window.bind("<Down>", lambda event: change_direction("down"))
+window.bind("<space>", space_pressed)  # Bind space bar key press
 
 snake = Snake()
 food = Food()
