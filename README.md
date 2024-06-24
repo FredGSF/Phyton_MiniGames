@@ -1,1 +1,1 @@
-Just same games i made while learning python
+I just made some of my childwood games in python
