@@ -4,7 +4,7 @@ import string
 # Hangman stages
 hangman_stages = [
     """
-        +---+ 
+        +---+
         |   |
             |
             |
