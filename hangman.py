@@ -1,7 +1,7 @@
 import random
 import string
 
-# Hangman stages
+# Hangman stages 
 hangman_stages = [
     """ 
         +---+
